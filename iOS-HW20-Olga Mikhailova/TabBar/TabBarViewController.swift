@@ -7,64 +7,53 @@
 
 import UIKit
 
-class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
+final class TabBarViewController: UITabBarController {
     
+    // MARK: - Properties
+    private let tabBarNavigation: TabBarNavigationProtocol
+    
+    // MARK: - Initialization
+    init(tabBarNavigation: TabBarNavigationProtocol = TabBarNavigationController()) {
+        self.tabBarNavigation = tabBarNavigation
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        delegate = self
-        
         setupTabBarController()
-        setupTabBarViewControllers()
+        viewControllers = tabBarNavigation.createAllControllers()
     }
     
+    // MARK: - Private Methods
     private func setupTabBarController() {
-        let lightGrayColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.0)
-        tabBar.backgroundColor = lightGrayColor
-        tabBar.tintColor = .systemBlue
-        tabBar.isTranslucent = false
-    }
-    
-    func setupTabBarViewControllers() {
-        // Library
-        let library = LibraryViewController()
-        let libraryItem = UITabBarItem(
-            title: "Library",
-            image: UIImage(systemName: "photo.fill.on.rectangle.fill"),
-            selectedImage: UIImage(systemName: "photo.fill.on.rectangle.fill")
-        )
-        library.tabBarItem = libraryItem
-        
-        // ForYou
-        let forYou = ForYouViewController()
-        let forYouItem = UITabBarItem(
-            title: "Library",
-            image: UIImage(systemName: "photo.fill.on.rectangle.fill"),
-            selectedImage: UIImage(systemName: "photo.fill.on.rectangle.fill"
-                                  )
-        )
-        forYou.tabBarItem = forYouItem
-        
-        // Albums
-        let albums = AlbumsViewController()
-        let albumsItem = UITabBarItem(
-            title: "Library",
-            image: UIImage(named: "albums"),
-            selectedImage: UIImage(named: "albums")
-        )
-        albums.tabBarItem = albumsItem
-        
-        // Search
-        let search = SearchViewController()
-        let searchItem = UITabBarItem(
-            title: "Library",
-            image: UIImage(systemName: "magnifyingglass"),
-            selectedImage: UIImage(systemName: "magnifyingglass")
-        )
-        
-        search.tabBarItem = searchItem
-        
-        let controllers = [library, forYou, albums, search]
-        self.setViewControllers(controllers, animated: true)
+        tabBar.backgroundColor = Constants.backgroundColor
+        tabBar.unselectedItemTintColor = Constants.unselectedItemColor
+        tabBar.tintColor = Constants.selectedItemColor
+        tabBar.isTranslucent = Constants.isTranslucent
     }
 }
 
+// MARK: - Constants
+private extension TabBarViewController {
+    enum Constants {
+        static let backgroundColor = UIColor(
+            red: 0.96,
+            green: 0.96,
+            blue: 0.96,
+            alpha: 1.0
+        )
+        static let unselectedItemColor = UIColor(
+            red: 0.6,
+            green: 0.6,
+            blue: 0.6,
+            alpha: 1.0
+        )
+        static let selectedItemColor: UIColor = .systemBlue
+        static let isTranslucent = false
+    }
+}
