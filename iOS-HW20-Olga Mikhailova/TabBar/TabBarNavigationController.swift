@@ -10,7 +10,7 @@ protocol TabBarNavigationProtocol {
     func createAllControllers() -> [UIViewController]
 }
 
-final class TabBarNavigationController: TabBarNavigationProtocol {
+final class TabBarController: TabBarNavigationProtocol {
     
     func createAllControllers() -> [UIViewController] {
         return [
@@ -67,7 +67,7 @@ final class TabBarNavigationController: TabBarNavigationProtocol {
 
 // MARK: - Constants
 
-private extension TabBarNavigationController {
+private extension TabBarController {
     enum Constants {
         enum TabTitles {
             static let library = "Library"

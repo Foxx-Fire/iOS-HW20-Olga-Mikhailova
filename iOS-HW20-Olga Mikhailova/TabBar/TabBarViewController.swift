@@ -15,7 +15,7 @@ final class TabBarViewController: UITabBarController {
     
     // MARK: - Initialization
     
-    init(tabBarNavigation: TabBarNavigationProtocol = TabBarNavigationController()) {
+    init(tabBarNavigation: TabBarNavigationProtocol = TabBarController()) {
         self.tabBarNavigation = tabBarNavigation
         super.init(nibName: nil, bundle: nil)
     }
