@@ -19,41 +19,7 @@ class OtherAlbumsCell: UICollectionViewCell {
     private lazy var countLabel = makeCountLabel()
     private lazy var chevronImageView = makeChevronImageView()
     private lazy var separatorView = makeSeparatorView()
-  //  private lazy var iconImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.contentMode = .scaleAspectFit
-//        imageView.tintColor = .systemBlue
-//        return imageView
-//    }()
-//    
-//    private let titleLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.systemFont(ofSize: 18)
-//        label.textColor = .systemBlue
-//        return label
-//    }()
-//    
-//    private let countLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.systemFont(ofSize: 16)
-//        label.textColor = .systemGray
-//        label.textAlignment = .right
-//        return label
-//    }()
-//    
-//    private let chevronImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.contentMode = .scaleAspectFit
-//        imageView.tintColor = .systemGray
-//        return imageView
-//    }()
-//    
-//    private let separatorView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .systemGray5
-//        return view
-//    }()
-    
+ 
     // MARK: - Initialization
         
     override init(frame: CGRect) {

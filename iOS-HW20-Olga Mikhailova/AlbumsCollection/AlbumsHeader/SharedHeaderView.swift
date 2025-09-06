@@ -13,7 +13,6 @@ class SharedHeaderView: UICollectionReusableView {
     // MARK: - Properties
     
     private var buttonAction: (() -> Void)?
-    //  private var hasButton: Bool = false
     
     // MARK: - UI Elements
     private lazy var titleLabel = makeTitleLabel()

@@ -14,7 +14,6 @@ class AlbumsHeaderView: UICollectionReusableView {
     // MARK: - Properties
     
     private var buttonAction: (() -> Void)?
-    //    private var hasButton: Bool = false
     
     //MARK: - UI Elements
     
