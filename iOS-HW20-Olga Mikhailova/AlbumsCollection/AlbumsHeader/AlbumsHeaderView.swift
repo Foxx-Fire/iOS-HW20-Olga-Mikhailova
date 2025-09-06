@@ -27,7 +27,6 @@ final class AlbumsHeaderView: UICollectionReusableView {
         
         setupHierarchy()
         setupLayout()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -38,18 +37,19 @@ final class AlbumsHeaderView: UICollectionReusableView {
     
     func setupHierarchy() {
         addSubview(titleLabel)
-        addSubview(seeAllButton)
+      //  addSubview(seeAllButton)
     }
     
     func setupLayout() {
         titleLabel.snp.makeConstraints { make in
             make.leading.centerY.equalToSuperview()
         }
-        
+    }
+    
+    private func setupButtonConstraints() {
         seeAllButton.snp.makeConstraints { make in
             make.trailing.centerY.equalToSuperview()
             make.height.equalTo(30)
-            make.centerY.equalTo(titleLabel)
         }
     }
     
@@ -78,13 +78,27 @@ final class AlbumsHeaderView: UICollectionReusableView {
         titleLabel.text = model.title
         
         if let buttonTitle = model.buttonTitle {
-            seeAllButton.setTitle(buttonTitle, for: .normal)
-            buttonAction = model.buttonAction
-            seeAllButton.isHidden = false
+            configureWithButton(title: buttonTitle, action: model.buttonAction)
         } else {
-            seeAllButton.isHidden = true
-            buttonAction = nil
+            configureWithoutButton()
         }
+    }
+    
+    private func configureWithButton(title: String, action: (() -> Void)?) {
+        if seeAllButton.superview == nil {
+            addSubview(seeAllButton)
+            setupButtonConstraints()
+        }
+        
+        seeAllButton.setTitle(title, for: .normal)
+        buttonAction = action
+        seeAllButton.isHidden = false
+    }
+    
+    private func configureWithoutButton() {
+        seeAllButton.removeFromSuperview()
+        seeAllButton.isHidden = true
+        buttonAction = nil
     }
     
     //MARK: - Reuse
@@ -94,6 +108,7 @@ final class AlbumsHeaderView: UICollectionReusableView {
         titleLabel.text = nil
         seeAllButton.setTitle(nil, for: .normal)
         buttonAction = nil
+        seeAllButton.removeFromSuperview()
     }
 }
 

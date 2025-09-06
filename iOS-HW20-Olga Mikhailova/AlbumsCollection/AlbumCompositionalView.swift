@@ -58,11 +58,6 @@ final class AlbumCompositionalView: UIView {
             forCellWithReuseIdentifier: SharedAlbumsCell.identifier
         )
         collectionView.register(
-            SharedHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: SharedHeaderView.identifier
-        )
-        collectionView.register(
             MediaTypesCell.self,
             forCellWithReuseIdentifier: MediaTypesCell.identifier
         )
@@ -179,36 +174,15 @@ extension AlbumCompositionalView: UICollectionViewDataSource {
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
         
-        let sectionType = SectionHeaderModel.allSections[indexPath.section].sectionType
-        
-        switch sectionType {
-        case .myAlbums:
-            let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: AlbumsHeaderView.identifier,
-                for: indexPath
-            ) as! AlbumsHeaderView
-            header.configuration(model: SectionHeaderModel.allSections[indexPath.section])
-            return header
-            
-        case .sharedAlbums:
-            let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: SharedHeaderView.identifier, // Используйте SharedHeaderView
-                for: indexPath
-            ) as! SharedHeaderView
-            header.configuration(model: SectionHeaderModel.allSections[indexPath.section])
-            return header
-            
-        case .mediaTypes, .otherAlbums:
-            // Для остальных секций
-            let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: AlbumsHeaderView.identifier,
-                for: indexPath
-            ) as! AlbumsHeaderView
-            header.configuration(model: SectionHeaderModel.allSections[indexPath.section])
-            return header
+        guard let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: AlbumsHeaderView.identifier,
+            for: indexPath
+        ) as? AlbumsHeaderView else {
+            return UICollectionReusableView()
         }
+        
+        header.configuration(model: SectionHeaderModel.allSections[indexPath.section])
+        return header
     }
 }
