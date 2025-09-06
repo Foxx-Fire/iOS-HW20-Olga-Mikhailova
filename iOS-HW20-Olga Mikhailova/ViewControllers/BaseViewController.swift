@@ -7,9 +7,9 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+ class BaseViewController: UIViewController {
     
-    let navigation = NavigationAppearanceManager()
+    private let navigation = NavigationAppearanceManager()
     
     // MARK: - UI Elements
     
@@ -37,8 +37,8 @@ class BaseViewController: UIViewController {
         title: String,
         showButton: Bool = false,
         buttonImage: String? = nil,
-        buttonAction: UIAction? = nil) {
-            
+        buttonAction: UIAction? = nil
+    ) {
             navigationItem.title = title
             
             if showButton {
@@ -46,7 +46,7 @@ class BaseViewController: UIViewController {
                     navigationAddButton.image = UIImage(systemName: buttonImage)
                 }
                 
-                if let buttonAction = buttonAction {
+                if let buttonAction {
                     navigationAddButton.primaryAction = buttonAction
                 }
                 

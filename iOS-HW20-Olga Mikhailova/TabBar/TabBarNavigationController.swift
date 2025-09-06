@@ -64,30 +64,9 @@ final class TabBarNavigationController: TabBarNavigationProtocol {
             return navController
         }
     }
-    
-//    // MARK: - Private Helpers
-//    
-//    private func createNavigationController(rootViewController: UIViewController,
-//                                            title: String,
-//                                            image: TabBarImage,
-//                                            selectedImage: TabBarImage) -> UINavigationController {
-//        let navigationController = UINavigationController(
-//            navigationBarClass: TallNavigationBar.self,
-//            toolbarClass: nil
-//        )
-//        navigationController.viewControllers = [rootViewController]
-//        
-//        navigationController.tabBarItem = UITabBarItem(
-//            title: title,
-//            image: image.uiImage,
-//            selectedImage: selectedImage.uiImage
-//        )
-//        
-//        return navigationController
-//    }
-//}
 
 // MARK: - Constants
+
 private extension TabBarNavigationController {
     enum Constants {
         enum TabTitles {

@@ -8,7 +8,8 @@
 import UIKit
 import SnapKit
 
-class MediaTypesCell: UICollectionViewCell {
+final class MediaTypesCell: UICollectionViewCell {
+    
     static let identifier = "MediaTypes"
     
     // MARK: - UI Elements

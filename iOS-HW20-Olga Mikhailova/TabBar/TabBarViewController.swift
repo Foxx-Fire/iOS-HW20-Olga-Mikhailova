@@ -10,9 +10,11 @@ import UIKit
 final class TabBarViewController: UITabBarController {
     
     // MARK: - Properties
+    
     private let tabBarNavigation: TabBarNavigationProtocol
     
     // MARK: - Initialization
+    
     init(tabBarNavigation: TabBarNavigationProtocol = TabBarNavigationController()) {
         self.tabBarNavigation = tabBarNavigation
         super.init(nibName: nil, bundle: nil)
@@ -23,6 +25,7 @@ final class TabBarViewController: UITabBarController {
     }
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBarController()
@@ -30,6 +33,7 @@ final class TabBarViewController: UITabBarController {
     }
     
     // MARK: - Private Methods
+    
     private func setupTabBarController() {
         tabBar.backgroundColor = Constants.backgroundColor
         tabBar.unselectedItemTintColor = Constants.unselectedItemColor
@@ -39,6 +43,7 @@ final class TabBarViewController: UITabBarController {
 }
 
 // MARK: - Constants
+
 private extension TabBarViewController {
     enum Constants {
         static let backgroundColor = UIColor(

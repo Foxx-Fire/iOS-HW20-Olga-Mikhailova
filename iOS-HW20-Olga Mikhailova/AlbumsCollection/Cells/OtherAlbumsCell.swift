@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class OtherAlbumsCell: UICollectionViewCell {
+final class OtherAlbumsCell: UICollectionViewCell {
     
     static let identifier = "OtherAlbums"
     

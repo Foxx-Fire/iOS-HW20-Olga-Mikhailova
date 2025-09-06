@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MediaTypesHeaderView: UICollectionReusableView {
+final class MediaTypesHeaderView: UICollectionReusableView {
     
     static let identifier = "MediaTypesHeaderView"
     

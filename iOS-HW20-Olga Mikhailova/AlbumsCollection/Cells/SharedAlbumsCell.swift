@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class SharedAlbumsCell: UICollectionViewCell {
+final class SharedAlbumsCell: UICollectionViewCell {
     
     // MARK: - Properties
     

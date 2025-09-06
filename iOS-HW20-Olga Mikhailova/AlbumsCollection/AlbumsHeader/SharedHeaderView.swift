@@ -7,7 +7,8 @@
 
 import UIKit
 
-class SharedHeaderView: UICollectionReusableView {
+final class SharedHeaderView: UICollectionReusableView {
+    
     static let identifier = "SharedHeaderView"
     
     // MARK: - Properties

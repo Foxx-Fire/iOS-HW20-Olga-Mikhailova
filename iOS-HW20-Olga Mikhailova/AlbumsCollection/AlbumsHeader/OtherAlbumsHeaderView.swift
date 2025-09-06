@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OtherAlbumsHeaderView: UICollectionReusableView {
+final class OtherAlbumsHeaderView: UICollectionReusableView {
     
     static let identifier = "OtherAlbumsHeaderView"
     
