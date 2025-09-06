@@ -70,17 +70,15 @@ class BaseViewController: UIViewController {
     }
     
     private func makeNavigationAddButton() -> UIBarButtonItem {
-        let action = UIAction { [weak self] _ in
-            self?.defaultButtonAction()
-        }
-        let button = UIBarButtonItem(systemItem: .add, primaryAction: action)
+        let button = UIBarButtonItem(
+            systemItem: .add,
+            primaryAction: UIAction { _ in
+                print("Add button tapped in Albums")
+            }
+        )
+     
         button.tintColor = Constants.buttonTintColor
         return button
-    }
-    
-    // MARK: - Actions
-    @objc private func defaultButtonAction() {
-        print("Add button tapped in Albums")
     }
 }
 

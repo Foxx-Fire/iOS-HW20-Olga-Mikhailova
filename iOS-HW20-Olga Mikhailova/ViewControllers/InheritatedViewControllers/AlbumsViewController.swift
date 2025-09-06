@@ -26,8 +26,8 @@ class AlbumsViewController: BaseViewController{
     }
     
     func setupNavigation() {
-        let addAction = UIAction { [weak self] _ in
-            self?.addButtonTapped()
+        let addAction = UIAction { _ in
+            print("Add button tapped in Albums")
         }
         
         configureNavigation(
@@ -47,10 +47,6 @@ class AlbumsViewController: BaseViewController{
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
-    
-    @objc private func addButtonTapped() {
-        print("Add button tapped in Albums")
-    }
 }
 
 // MARK: - Constants
@@ -60,7 +56,7 @@ extension AlbumsViewController {
             static let title = "Albums"
             static let buttonImageName = "plus"
         }
-        
+
         static let backgroundColor: UIColor = .white
     }
 }
