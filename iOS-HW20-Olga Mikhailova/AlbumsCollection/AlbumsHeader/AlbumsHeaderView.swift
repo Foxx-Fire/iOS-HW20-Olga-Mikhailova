@@ -37,7 +37,7 @@ final class AlbumsHeaderView: UICollectionReusableView {
     
     func setupHierarchy() {
         addSubview(titleLabel)
-      //  addSubview(seeAllButton)
+        //  addSubview(seeAllButton)
     }
     
     func setupLayout() {
@@ -74,7 +74,7 @@ final class AlbumsHeaderView: UICollectionReusableView {
     
     // MARK: - Configuration
     
-    func configuration(model: SectionHeaderModel) {
+    func configuration(model: SectionHeader) {
         titleLabel.text = model.title
         
         if let buttonTitle = model.buttonTitle {
