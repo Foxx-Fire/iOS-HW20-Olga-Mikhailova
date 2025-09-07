@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MyAlbumsCell: UICollectionViewCell {
+final class MyAlbumsCell: UICollectionViewCell {
     
     static let identifier = "MyAlbumsCell"
     

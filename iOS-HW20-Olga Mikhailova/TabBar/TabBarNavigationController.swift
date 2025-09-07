@@ -10,7 +10,7 @@ protocol TabBarNavigationProtocol {
     func createAllControllers() -> [UIViewController]
 }
 
-final class TabBarNavigationController: TabBarNavigationProtocol {
+final class TabBarController: TabBarNavigationProtocol {
     
     func createAllControllers() -> [UIViewController] {
         return [
@@ -41,41 +41,6 @@ final class TabBarNavigationController: TabBarNavigationProtocol {
         ]
     }
     
-    //    private func createLibraryController() -> UIViewController {
-    //        createNavigationController(
-    //            rootViewController: LibraryViewController(),
-    //            title: Constants.TabTitles.library,
-    //            image: .system(name: Constants.TabIcons.library),
-    //            selectedImage: .system(name: Constants.TabIcons.library)
-    //        )
-    //    }
-    //    
-    //    private func createForYouController() -> UIViewController {
-    //        createNavigationController(
-    //            rootViewController: ForYouViewController(),
-    //            title: Constants.TabTitles.forYou,
-    //            image: .system(name: Constants.TabIcons.forYou),
-    //            selectedImage: .system(name: Constants.TabIcons.forYou)
-    //        )
-    //    }
-    //    
-    //    private func createAlbumsController() -> UIViewController {
-    //        createNavigationController(
-    //            rootViewController: AlbumsViewController(),
-    //            title: Constants.TabTitles.albums,
-    //            image: .custom(name: Constants.TabIcons.albums),
-    //            selectedImage: .custom(name: Constants.TabIcons.albums)
-    //        )
-    //    }
-    //    
-    //    private func createSearchController() -> UIViewController {
-    //        createNavigationController(
-    //            rootViewController: SearchViewController(),
-    //            title: Constants.TabTitles.search,
-    //            image: .system(name: Constants.TabIcons.search),
-    //            selectedImage: .system(name: Constants.TabIcons.search)
-    //        )
-// }
         private func createController(rootViewController: UIViewController,
                                       title: String,
                                       systemIcon: String,
@@ -99,31 +64,10 @@ final class TabBarNavigationController: TabBarNavigationProtocol {
             return navController
         }
     }
-    
-//    // MARK: - Private Helpers
-//    
-//    private func createNavigationController(rootViewController: UIViewController,
-//                                            title: String,
-//                                            image: TabBarImage,
-//                                            selectedImage: TabBarImage) -> UINavigationController {
-//        let navigationController = UINavigationController(
-//            navigationBarClass: TallNavigationBar.self,
-//            toolbarClass: nil
-//        )
-//        navigationController.viewControllers = [rootViewController]
-//        
-//        navigationController.tabBarItem = UITabBarItem(
-//            title: title,
-//            image: image.uiImage,
-//            selectedImage: selectedImage.uiImage
-//        )
-//        
-//        return navigationController
-//    }
-//}
 
 // MARK: - Constants
-private extension TabBarNavigationController {
+
+private extension TabBarController {
     enum Constants {
         enum TabTitles {
             static let library = "Library"

@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class SharedAlbumsFirstCell: UICollectionViewCell {
+final class SharedAlbumsFirstCell: UICollectionViewCell {
     
     static let identifier = "SharedAlbumsFirstCell"
     

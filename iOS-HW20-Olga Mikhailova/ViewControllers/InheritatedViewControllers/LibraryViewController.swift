@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LibraryViewController: BaseViewController {
+final class LibraryViewController: BaseViewController {
     
     // MARK: - Lifecycle
     

@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class SectionSeparatorView: UICollectionReusableView {
+final class SectionSeparatorView: UICollectionReusableView {
     
     static let identifier = "SectionSeparatorView"
     

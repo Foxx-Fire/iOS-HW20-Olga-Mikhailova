@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ForYouViewController: BaseViewController {
+final class ForYouViewController: BaseViewController {
     
     // MARK: - Lifecycle
     

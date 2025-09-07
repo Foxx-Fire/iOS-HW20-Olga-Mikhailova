@@ -7,14 +7,13 @@
 
 import UIKit
 
-class AlbumsHeaderView: UICollectionReusableView {
+final class AlbumsHeaderView: UICollectionReusableView {
     
     static let identifier = "AlbumsHeaderView"
     
     // MARK: - Properties
     
     private var buttonAction: (() -> Void)?
-    //    private var hasButton: Bool = false
     
     //MARK: - UI Elements
     
@@ -28,7 +27,6 @@ class AlbumsHeaderView: UICollectionReusableView {
         
         setupHierarchy()
         setupLayout()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -39,18 +37,19 @@ class AlbumsHeaderView: UICollectionReusableView {
     
     func setupHierarchy() {
         addSubview(titleLabel)
-        addSubview(seeAllButton)
+        //  addSubview(seeAllButton)
     }
     
     func setupLayout() {
         titleLabel.snp.makeConstraints { make in
             make.leading.centerY.equalToSuperview()
         }
-        
+    }
+    
+    private func setupButtonConstraints() {
         seeAllButton.snp.makeConstraints { make in
             make.trailing.centerY.equalToSuperview()
             make.height.equalTo(30)
-            make.centerY.equalTo(titleLabel)
         }
     }
     
@@ -75,17 +74,31 @@ class AlbumsHeaderView: UICollectionReusableView {
     
     // MARK: - Configuration
     
-    func configuration(model: SectionHeaderModel) {
+    func configuration(model: SectionHeader) {
         titleLabel.text = model.title
         
         if let buttonTitle = model.buttonTitle {
-            seeAllButton.setTitle(buttonTitle, for: .normal)
-            buttonAction = model.buttonAction
-            seeAllButton.isHidden = false
+            configureWithButton(title: buttonTitle, action: model.buttonAction)
         } else {
-            seeAllButton.isHidden = true
-            buttonAction = nil
+            configureWithoutButton()
         }
+    }
+    
+    private func configureWithButton(title: String, action: (() -> Void)?) {
+        if seeAllButton.superview == nil {
+            addSubview(seeAllButton)
+            setupButtonConstraints()
+        }
+        
+        seeAllButton.setTitle(title, for: .normal)
+        buttonAction = action
+        seeAllButton.isHidden = false
+    }
+    
+    private func configureWithoutButton() {
+        seeAllButton.removeFromSuperview()
+        seeAllButton.isHidden = true
+        buttonAction = nil
     }
     
     //MARK: - Reuse
@@ -95,6 +108,7 @@ class AlbumsHeaderView: UICollectionReusableView {
         titleLabel.text = nil
         seeAllButton.setTitle(nil, for: .normal)
         buttonAction = nil
+        seeAllButton.removeFromSuperview()
     }
 }
 

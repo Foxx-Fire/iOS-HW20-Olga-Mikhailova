@@ -4,84 +4,159 @@
 //
 //  Created by FoxxFire on 17.08.2025.
 //
+
 import Foundation
 
-struct SectionHeaderModel {
+//MARK: - Header
+
+struct SectionHeader: Hashable {
     let title: String
     let buttonTitle: String?
     let buttonAction: (() -> Void)?
-    let sectionType: SectionType
     
-    // без кнопки
-    init(title: String, sectionType: SectionType) {
-        self.title = title
-        self.buttonTitle = nil
-        self.buttonAction = nil
-        self.sectionType = sectionType
-    }
-    
-    // с кнопкой
-    init(title: String, buttonTitle: String, buttonAction: @escaping () -> Void, sectionType: SectionType) {
+    init(
+        title: String,
+        buttonTitle: String? = nil,
+        buttonAction: (() -> Void)? = nil
+    ) {
         self.title = title
         self.buttonTitle = buttonTitle
         self.buttonAction = buttonAction
-        self.sectionType = sectionType
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+    }
+    
+    static func == (lhs: SectionHeader, rhs: SectionHeader) -> Bool {
+        lhs.title == rhs.title
     }
 }
 
-enum SectionType {
-    case myAlbums
-    case sharedAlbums
-    case mediaTypes
-    case otherAlbums
+// MARK: - Sections
+
+enum SectionType: String, CaseIterable {
+    case myAlbums = "My Albums"
+    case sharedAlbums = "Shared Albums"
+    case mediaTypes = "Media Types"
+    case other = "Other"
 }
 
-struct MyAlbum {
+struct MyAlbum: Hashable {
     let imageName: String
     let title: String
     let count: Int
 }
 
-struct FirstSharedAlbum {
+struct FirstSharedAlbum: Hashable {
     let imageNames: [String]
     let title: String
     let subtitle: String
 }
 
-struct SharedAlbum {
+struct SharedAlbum: Hashable {
     let imageName: String
     let title: String
     let subtitle: String
 }
 
-struct MediaAndOther {
+struct MediaAndOther: Hashable {
     let imageName: String
     let title: String
     let count: Int
     let chevronName: String
 }
 
-extension SectionHeaderModel {
-    static var allSections: [SectionHeaderModel] = [
-        SectionHeaderModel(
-            title: "My Albums",
-            buttonTitle: "See All",
-            buttonAction: { print("See All tapped for My Albums") },
-            sectionType: .myAlbums
+// Модель элемента секции
+enum AlbumItem: Hashable {
+    case myAlbum(MyAlbum)
+    case firstSharedAlbum(FirstSharedAlbum)
+    case sharedAlbum(SharedAlbum)
+    case mediaType(MediaAndOther)
+    case other(MediaAndOther)
+    
+    var id: String {
+        switch self {
+        case .myAlbum(let album): return "myAlbum_\(album.title)"
+        case .firstSharedAlbum(let album): return "firstShared_\(album.title)"
+        case .sharedAlbum(let album): return "sharedAlbum_\(album.title)"
+        case .mediaType(let media): return "mediaType_\(media.title)"
+        case .other(let other): return "utility_\(other.title)"
+        }
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: AlbumItem, rhs: AlbumItem) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+// Модель секции
+struct AlbumSection: Hashable {
+    let header: SectionHeader
+    let type: SectionType
+    let items: [AlbumItem]
+}
+
+//MARK: - datas
+
+extension AlbumSection {
+    static var allSections: [AlbumSection] = [
+        // My Albums
+        AlbumSection(
+            header: SectionHeader(
+                title: "My Albums",
+                buttonTitle: "See All",
+                buttonAction: {
+                    print("See All tapped for My Albums")
+                }
+            ),
+            type: .myAlbums,
+            items: MyAlbum.myAlbums.map {AlbumItem.myAlbum($0)}
         ),
-        SectionHeaderModel(
-            title: "Shared Albums",
-            buttonTitle: "See All",
-            buttonAction: { print("See All tapped for Shared Albums") },
-            sectionType: .sharedAlbums
+        
+        // Shared Albums
+        AlbumSection(
+            header: SectionHeader(
+                title: "Shared Albums",
+                buttonTitle: "See All",
+                buttonAction: {
+                    print("See All tapped for Shared Albums")
+                }
+            ),
+            type: .sharedAlbums,
+            items: [
+                // Первая ячейка с кружочками
+                AlbumItem.firstSharedAlbum(FirstSharedAlbum.firstSharedAlbum),
+                // Остальные обычные ячейки
+            ] + SharedAlbum.sharedAlbums.map { AlbumItem.sharedAlbum($0) }
         ),
-        SectionHeaderModel(title: "Media Types", sectionType: .mediaTypes),
-        SectionHeaderModel(title: "Other Albums", sectionType: .otherAlbums)
+        
+        // Media Types
+        AlbumSection(
+            header: SectionHeader(title: "Media Types"),
+            type: .mediaTypes,
+            items: MediaAndOther.mediaTypes.map {
+                AlbumItem.mediaType($0
+                )}
+        ),
+        
+        // Other
+        AlbumSection(
+            header: SectionHeader(title: "Other"),
+            type: .other,
+            items: MediaAndOther.otherType.map {
+                AlbumItem.other($0
+                )}
+        )
     ]
 }
 
 extension MyAlbum {
-    static var myAlbum: [MyAlbum] = [
+    static var myAlbums: [MyAlbum] = [
         MyAlbum(
             imageName: "beachSunset",
             title: "Summer Vacation",
@@ -156,7 +231,7 @@ extension FirstSharedAlbum {
 }
 
 extension SharedAlbum {
-    static var sharedAlbum: [SharedAlbum] = [
+    static var sharedAlbums: [SharedAlbum] = [
         SharedAlbum(imageName: "familyBeach", title: "Family Reunion 2024", subtitle: "From Mom"),
         SharedAlbum(imageName: "roadTrip", title: "West Coast Road Trip", subtitle: "From Alex"),
         SharedAlbum(imageName: "weddingDay", title: "Sarah & Mike Wedding", subtitle: "From Sarah"),
@@ -171,7 +246,7 @@ extension SharedAlbum {
 }
 
 extension MediaAndOther {
-    static let mediaType: [MediaAndOther] = [
+    static let mediaTypes: [MediaAndOther] = [
         MediaAndOther(
             imageName: "video",
             title: "Videos",

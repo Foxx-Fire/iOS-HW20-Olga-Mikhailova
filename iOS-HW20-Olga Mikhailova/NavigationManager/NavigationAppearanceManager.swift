@@ -35,8 +35,6 @@ private extension NavigationAppearanceManager {
         static let titleColor: UIColor = .black
         static let buttonTintColor: UIColor = .black
         static let titleFont = UIFont.systemFont(ofSize: 34, weight: .bold)
-        
-        //  static let containerMargins = NSDirectionalEdgeInsets(top: 0, leading: -26, bottom: 0, trailing: 0)
         static let containerMargins = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0)
         static let containerTopInset: CGFloat = 10
         static let minContainerWidth: CGFloat = 300
