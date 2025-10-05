@@ -7,41 +7,52 @@
 
 import Foundation
 
-//MARK: - Header
+/*
+ 🧠 Как думать при создании модели:
+ 1. Первый вопрос: Что показывает CollectionView?
+ "Показывает секции: Мои альбомы, Общие альбомы, Медиа-типы..."
+ 
+ ⇒ Значит нужен массив секций [AlbumSection]
+ 
+ 2. Второй вопрос: Что внутри каждой секции?
+ "В секции есть заголовок и массив ячеек"
+ 
+ ⇒ Значит структура:
+ 
+ swift
+ struct AlbumSection {
+ let header: SectionHeader
+ let items: [???] // Что здесь?
+ }
+ 3. Третий вопрос: Какие типы ячеек в секциях?
+ "В 'Мои альбомы' - ячейки с картинкой и текстом"
+ 
+ "В 'Общие альбомы' - ячейки с кружочками и обычные"
+ 
+ ⇒ Значит нужен enum для объединения типов:
+ 
+ swift
+ enum AlbumItem {
+ case myAlbum(MyAlbum)
+ case firstSharedAlbum(FirstSharedAlbum)
+ case sharedAlbum(SharedAlbum)
+ }
+ 4. Четвертый вопрос: Что внутри каждой ячейки?
+ "Ячейка 'Мой альбом' имеет: картинку, название, количество"
+ 
+ ⇒ Значит структура:
+ 
+ swift
+ struct MyAlbum {
+ let imageName: String
+ let title: String
+ let count: Int
+ }
+ */
 
-struct SectionHeader: Hashable {
-    let title: String
-    let buttonTitle: String?
-    let buttonAction: (() -> Void)?
-    
-    init(
-        title: String,
-        buttonTitle: String? = nil,
-        buttonAction: (() -> Void)? = nil
-    ) {
-        self.title = title
-        self.buttonTitle = buttonTitle
-        self.buttonAction = buttonAction
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(title)
-    }
-    
-    static func == (lhs: SectionHeader, rhs: SectionHeader) -> Bool {
-        lhs.title == rhs.title
-    }
-}
-
-// MARK: - Sections
-
-enum SectionType: String, CaseIterable {
-    case myAlbums = "My Albums"
-    case sharedAlbums = "Shared Albums"
-    case mediaTypes = "Media Types"
-    case other = "Other"
-}
-
+// АЛГОРИТМ СОЗДАНИЯ (шаг за шагом):
+// ШАГ 1: Определить структуры данных для ячеек
+// Данные для каждой типа ячеек
 struct MyAlbum: Hashable {
     let imageName: String
     let title: String
@@ -67,7 +78,8 @@ struct MediaAndOther: Hashable {
     let chevronName: String
 }
 
-// Модель элемента секции
+//ШАГ 2: Создать enum для объединения типов
+// enum для объединения типов
 enum AlbumItem: Hashable {
     case myAlbum(MyAlbum)
     case firstSharedAlbum(FirstSharedAlbum)
@@ -94,13 +106,54 @@ enum AlbumItem: Hashable {
     }
 }
 
+// ШАГ 3: Создать модель секции
 // Модель секции
 struct AlbumSection: Hashable {
-    let header: SectionHeader
-    let type: SectionType
-    let items: [AlbumItem]
+    let header: SectionHeader  // Заголовок секции
+    let type: SectionType      // Тип секции (для layout)
+    let items: [AlbumItem]     // ✅ Массив ВСЕХ ячеек этой секции
 }
 
+// После создания основных моделей, до лейаута
+// Зачем нужен SectionType: Для лейаута
+// AlbumCompositionalLayout  let sectionType = AlbumSection.allSections[sectionIndex].type // ✅ Берем тип
+// MARK: - Sections
+
+enum SectionType: String, CaseIterable {
+    case myAlbums = "My Albums"
+    case sharedAlbums = "Shared Albums"
+    case mediaTypes = "Media Types"
+    case other = "Other"
+}
+
+//ШАГ 4: Создать заголовок секции
+//MARK: - Header
+
+struct SectionHeader: Hashable {
+    let title: String
+    let buttonTitle: String?
+    let buttonAction: (() -> Void)?
+    
+    init(
+        title: String,
+        buttonTitle: String? = nil,
+        buttonAction: (() -> Void)? = nil
+    ) {
+        self.title = title
+        self.buttonTitle = buttonTitle
+        self.buttonAction = buttonAction
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+    }
+    
+    static func == (lhs: SectionHeader, rhs: SectionHeader) -> Bool {
+        lhs.title == rhs.title
+    }
+}
+
+//ШАГ 5: Собрать все данные
 //MARK: - datas
 
 extension AlbumSection {
@@ -129,9 +182,10 @@ extension AlbumSection {
             ),
             type: .sharedAlbums,
             items: [
-                // Первая ячейка с кружочками
+                // [перваяЯчейка] + [остальныеЯчейки]
+                // ✅ ПЕРВАЯ ячейка с кружочками
                 AlbumItem.firstSharedAlbum(FirstSharedAlbum.firstSharedAlbum),
-                // Остальные обычные ячейки
+                // ✅ Остальные обычные ячейки
             ] + SharedAlbum.sharedAlbums.map { AlbumItem.sharedAlbum($0) }
         ),
         

@@ -45,8 +45,10 @@ final class AlbumCompositionalLayout {
         }
     }
     
-    private func createMyAlbumsSection(environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        let contentWidth = environment.container.effectiveContentSize.width - Constants.sidePadding * 2
+    private func createMyAlbumsSection(
+        environment: NSCollectionLayoutEnvironment
+    ) -> NSCollectionLayoutSection {
+        let contentWidth = environment.container.effectiveContentSize.width 
         let columnWidth = (contentWidth - Constants.interColumnSpacing) / 2
         let itemHeight = calculateMyAlbumsItemHeight(columnWidth: columnWidth)
         let verticalGroupHeight = itemHeight * 2 + Constants.verticalSpacing
@@ -96,8 +98,10 @@ final class AlbumCompositionalLayout {
         return section
     }
     
-    private func createSharedAlbumsSection(environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        let contentWidth = environment.container.effectiveContentSize.width - Constants.sidePadding * 2
+    private func createSharedAlbumsSection(
+        environment: NSCollectionLayoutEnvironment
+    ) -> NSCollectionLayoutSection {
+        let contentWidth = environment.container.effectiveContentSize.width
         let groupWidth = contentWidth * Constants.sharedAlbumsCardWidthMultiplier
         let itemHeight = calculateSharedAlbumsItemHeight(groupWidth: groupWidth)
         
